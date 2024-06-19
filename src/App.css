@@ -167,8 +167,10 @@ body{
 }
 
 .first-page button:hover{
-  background-color: #6D84F6;
+  background-color: #303344;
   color: aliceblue;
+  border-color: aliceblue;
+  border-style: solid;
   cursor: pointer;;
 }
 
