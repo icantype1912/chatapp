@@ -1,38 +1,177 @@
-.App {
-  text-align: center;
+.parent-container{
+  height: 100vh;
+  display: flex;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.left-container{
+  height: 100vh;
+  background-color: #252837;
+  flex-grow: 2;
+  border-radius: 1ch;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  padding:3ch;
+}
+.right-container{
+  height: 100vh;
+  background-color:#1F1F2B;
+  flex-grow: 8;
+  border-radius: 1ch;
+  padding: 3ch;
+}
+html{
+  height: 100%;
 }
 
-.App-link {
-  color: #61dafb;
+body{
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-color:#1F1F2B;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.search{
+  width: 50%;
+  height: 4ch;
+  padding: 1ch;
+  background-color: #1F1F2B;
+  border-style: none;
+  border-radius: 1ch;
+  outline: none;
+}
+
+.contact-list{
+  display: flex;
+  flex-direction: column;
+  padding: 2ch;
+  align-items: center;
+}
+
+.contact-card{
+  color: aliceblue;
+  border-radius: 1ch;
+  background-color: #303344;
+  padding-left: 2ch;
+  padding-right: 2ch;
+  padding-bottom: 1ch;
+  width:100%;
+  margin: 1ch;
+  height: 10ch;
+}
+
+.contact-card:hover{
+  background-color: #6D84F6;
+  cursor: pointer;
+}
+
+.login-table{
+  width:50ch;
+  margin:auto;
+  margin-top: 10ch;
+  height: 45ch;
+  align-items: center;
+  border-radius: 1ch;
+  background-color: aliceblue;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.login-table input{
+  width: 80%;
+  height: 5ch;
+  border-radius: 1ch;
+  border-style: solid;
+  border-color:#303344;
+  padding: 1px;
+  padding-left: 5px;
+}
+
+.login-table button{
+  height: 5ch;
+  width: 80%;
+  background-color: #6D84F6;
+  border-radius: 1ch;
+  border-style: none;
+  color: aliceblue;
+}
+
+.login-table button:hover{
+  background-color: #1F1F2B;
+  cursor: pointer;
+}
+
+.signup-table{
+  width:50ch;
+  margin:auto;
+  margin-top: 10ch;
+  height: 45ch;
+  align-items: center;
+  border-radius: 1ch;
+  background-color: aliceblue;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.signup-table input{
+  width: 80%;
+  height: 5ch;
+  border-radius: 1ch;
+  border-style: solid;
+  border-color:#303344;
+  padding: 1px;
+  margin-bottom: 1ch;
+  padding-left: 5px;
+}
+
+.signup-table button{
+  height: 5ch;
+  width: 80%;
+  background-color: #6D84F6;
+  border-radius: 1ch;
+  border-style: none;
+  color: aliceblue;
+  margin-top:2ch;
+}
+
+.signup-table button:hover{
+  background-color: #1F1F2B;
+  cursor: pointer;
+}
+
+.first-page{
+  margin-top: 10ch;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.first-page h1{
+  color: #6D84F6;
+  margin-bottom: 0ch;
+}
+
+.first-page h2{
+  color: aliceblue;
+}
+.first-page button{
+  margin-top: 5ch;
+  height: 6ch;
+  width: 20ch;
+  background-color: aliceblue;
+  border-style: none;
+  color:#303344;
+  border-style: solid;
+  border-radius: 1ch;
+  font-size: large;
+}
+
+.first-page button:hover{
+  background-color: #6D84F6;
+  color: aliceblue;
+  cursor: pointer;;
+}
+
+.signinerror{
+  color: rgba(255, 0, 0, 0.723);
 }
