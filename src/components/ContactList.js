@@ -2,7 +2,7 @@ import React from "react";
 import "../App.css"
 
 const ContactList = () =>{
-    const contacts = [{name:"adi",message:"Need to catch up"},{name:"sash",message:"you ok?"},{name:"amogh",message:"rr was fun"},{name:"ak",message:"go like my story"}]
+    const contacts = [{name:"adi",message:"Need to catch up"},{name:"sash",message:"you ok?"},{name:"amogh",message:"rr was fun"},{name:"ak",message:"go like my story"},{name:"naag",message:"whines"}]
     return<>
         <div className="contact-list">
         {contacts.map((x)=>{

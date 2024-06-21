@@ -1,6 +1,6 @@
 import React from "react"
 import { BrowserRouter,Route,Routes,Navigate } from "react-router-dom"
-
+import { useState,useEffect } from "react"
 
 
 import "./App.css"
@@ -11,15 +11,50 @@ import FirstPage from "./pages/FirstPage"
 
 
 const App = ()=>{
+  const [user,setUser] = useState(null);
+  
+  console.log("This is the user",user,typeof(user))
+  useEffect(()=>{
+    const storedUser = window.localStorage.getItem('user')
+    if(storedUser)
+      {
+        try
+        {
+          console.log("worked")
+          setUser(JSON.parse(storedUser))
+          console.log("parsed")
+        }
+        catch(error)
+        {
+          console.error("Failed to parse")
+        }
+      }
+  },[])
+
+  useEffect(()=>{
+    if(user !== null)
+      {
+        window.localStorage.setItem('user',JSON.stringify(user))
+      }
+    else{
+      window.localStorage.removeItem('user');
+    }
+  },[user])
+
     return(<>
       <BrowserRouter>
+      {(user === null)?
         <Routes>
           <Route path="/" element={<FirstPage/>}/>
-          <Route path="/login" element={<Login/>}/>
-          <Route path="/signup" element={<SignUp/>}/>
-          <Route path="/mainpage" element={<MainPage/>}/>
+          <Route path="/login" element={<Login setUser = {setUser}/>}/>
+          <Route path="/signup" element={<SignUp setUser = {setUser}/>}/>
           <Route path = "*" element={<Navigate to ="/"/>}/>
-        </Routes>
+        </Routes>:
+        <Routes>
+        <Route path="/mainpage" element={<MainPage user = {user} setUser = {setUser}/>}/>
+        <Route path = "*" element={<Navigate to ="/mainpage"/>}/>
+      </Routes>
+        }
       </BrowserRouter>
     </>
     )
