@@ -95,6 +95,9 @@
   border-radius: 1ch;
   color: aliceblue;
 }
+.from-message p{
+  color:#1F1F2B;
+}
 
 .to-message{
   align-self: flex-start;
@@ -104,6 +107,9 @@
   padding: 1ch;
   border-radius: 1ch;
   color: aliceblue;
+}
+.to-message p{
+  color: #6D84F6;
 }
 
 .bottom{
@@ -312,4 +318,6 @@ body{
 .signinerror{
   color: rgba(255, 0, 0, 0.723);
 }
+
+
 

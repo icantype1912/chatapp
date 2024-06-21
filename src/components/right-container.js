@@ -92,7 +92,7 @@ const RightConatainer = (props)=>{
                 {messages.map((x)=>{
                     return(<>
                         <div className={user === x.user?"from-message":"to-message"}>
-                            <p>{user}</p>
+                            <p className="user-tag">{x.user}</p>
                             <h4>{x.message}</h4>
                         </div>
                     </>
