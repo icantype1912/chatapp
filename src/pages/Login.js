@@ -42,6 +42,7 @@ const Login = (props) => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         setUser(userCredential.user.email);
+        console.log(userCredential.user)
         Navigate("/mainpage");
       })
       .catch((err) => {

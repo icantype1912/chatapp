@@ -3,7 +3,8 @@ import { useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import { initializeApp } from "firebase/app";
 import { getFirestore, orderBy } from "firebase/firestore";
-import { addDoc,collection,getDocs,query } from "firebase/firestore";
+import { addDoc,collection,query,onSnapshot } from "firebase/firestore";
+import { signOut,getAuth } from "firebase/auth";
 import "../App.css"
 
 const firebaseConfig = {
@@ -19,6 +20,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
+const auth = getAuth()
 
 const RightConatainer = (props)=>{
     const time = new Date()
@@ -26,24 +28,17 @@ const RightConatainer = (props)=>{
     const [message,setMessage] = useState("")
     const [messages,setMessages] = useState([])
 
-    const getMessages = async () => {
-        let tasks = [];
-        try {
-          const q = query(collection(db, "Chat"),orderBy("time"));
-          const snapshot = await getDocs(q);
-          snapshot.docs.forEach((doc) => {
-            tasks.push({ ...doc.data()});
-            console.log(tasks)
-          });
-        } catch (err) {
-          console.log(err.message);
-        } finally{
-            setMessages(tasks)
-        }
-      };
       
       useEffect(()=>{
-        getMessages()
+        const q = query(collection(db, "Chat"),orderBy("time"));
+        const unsub = onSnapshot(q,(snapshot)=>{
+            let tasks = []
+            snapshot.docs.forEach((doc)=>{
+                tasks.push({...doc.data()});
+            })
+            setMessages(tasks)
+        })
+        return ()=> unsub();
       },[])
 
     const addUserToFirestore = async(mes)=>{
@@ -64,8 +59,14 @@ const RightConatainer = (props)=>{
     const Navigate = useNavigate()
     const {user,setUser} = props
     const onLogOut = ()=>{
-        setUser(null)
-        Navigate("/login")
+        signOut(auth).then(()=>{
+            console.log("logged out")
+            setUser(null)
+            Navigate("/login")
+        }).catch((error)=>{
+            console.log(error)
+        })
+        
     }
 
     const handleSend = ()=>{

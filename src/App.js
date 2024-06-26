@@ -8,6 +8,7 @@ import MainPage from "./pages/MainPage"
 import Login from "./pages/Login"
 import SignUp from "./pages/SignUp"
 import FirstPage from "./pages/FirstPage"
+import Details from "./pages/Details"
 
 
 const App = ()=>{
@@ -48,6 +49,7 @@ const App = ()=>{
           <Route path="/" element={<FirstPage/>}/>
           <Route path="/login" element={<Login setUser = {setUser}/>}/>
           <Route path="/signup" element={<SignUp setUser = {setUser}/>}/>
+          <Route path="/Details" element={<Details/>}/>
           <Route path = "*" element={<Navigate to ="/"/>}/>
         </Routes>:
         <Routes>

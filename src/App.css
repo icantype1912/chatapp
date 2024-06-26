@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+
 .parent-container{
   height: 100vh;
   display: flex;
@@ -267,7 +269,7 @@ body{
 }
 
 .signup-table button{
-  height: 5ch;
+  height: 100%;
   width: 80%;
   background-color: #6D84F6;
   border-radius: 1ch;
@@ -279,6 +281,51 @@ body{
 .signup-table button:hover{
   background-color: #1F1F2B;
   cursor: pointer;
+}
+
+.details-table{
+  width:50ch;
+  margin:auto;
+  margin-top: 10ch;
+  height: 45ch;
+  align-items: center;
+  border-radius: 1ch;
+  background-color: aliceblue;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.details-table input{
+  width: 80%;
+  height: 5ch;
+  border-radius: 1ch;
+  border-style: solid;
+  border-color:#303344;
+  padding: 1px;
+  margin-bottom: 1ch;
+  padding-left: 5px;
+}
+
+.details-table button{
+  margin-bottom: 2ch;
+  height: 5ch;
+  width: 80%;
+  background-color: #6D84F6;
+  border-radius: 1ch;
+  border-style: none;
+  color: aliceblue;
+  margin-top:2ch;
+}
+
+.details-table button:hover{
+  background-color: #1F1F2B;
+  cursor: pointer;
+}
+
+
+.error{
+  color: red;
 }
 
 .first-page{
@@ -318,6 +365,7 @@ body{
 .signinerror{
   color: rgba(255, 0, 0, 0.723);
 }
+
 
 
 
