@@ -5,7 +5,8 @@ import { getAuth,updateProfile } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
 const auth = getAuth()
-const Details = ()=>{
+const Details = (props)=>{
+    const {setUser} = props
     const date = new Date()
     const year = date.getFullYear();
     const month = String(date.getMonth()+1).padStart(2,'0');
@@ -42,6 +43,7 @@ const Details = ()=>{
         updateProfile(auth.currentUser,{
             displayName:userdetails.uname,phone:userdetails.phno,dob:userdetails.dob
         }).then(()=>{
+            setUser(auth.currentUser.displayName)
             Navigate("/mainpage")
         }).catch((e)=>{console.log(e)})
     }

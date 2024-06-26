@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import { initializeApp } from "firebase/app";
@@ -23,12 +23,14 @@ const db = getFirestore(app)
 const auth = getAuth()
 
 const RightConatainer = (props)=>{
+    const ref = useRef()
     const time = new Date()
-    //const [count,setCount] = useState(0)
     const [message,setMessage] = useState("")
     const [messages,setMessages] = useState([])
 
-      
+      useEffect(()=>{
+        ref.current.scrollTop = ref.current.scrollHeight;
+      },[messages])
       useEffect(()=>{
         const q = query(collection(db, "Chat"),orderBy("time"));
         const unsub = onSnapshot(q,(snapshot)=>{
@@ -79,17 +81,22 @@ const RightConatainer = (props)=>{
         setMessage("")
     }
 
+    const handleSubmit = (e)=>{
+        e.preventDefault()
+        handleSend()
+    }
+
     return<>
         <div className="right-container">
             <div className="top">
                 <h2>Whom you are talking to</h2>
                 <div className="user-details">
-                    <h3>username</h3>
+                    <h3>{user}</h3>
                     <button onClick={onLogOut}>logout</button>
                 </div>
             </div>
 
-            <div className="middle">
+            <div className="middle" ref = {ref}> 
                 {messages.map((x)=>{
                     return(<>
                         <div className={user === x.user?"from-message":"to-message"}>
@@ -102,8 +109,10 @@ const RightConatainer = (props)=>{
             </div>
 
             <div className="bottom">
-                <input type="text" placeholder="type a message" value={message} onChange={(e)=>{setMessage(e.target.value)}}></input>
-                <button onClick={handleSend}>➤</button>
+                <form className="sendMes" onSubmit={handleSubmit}>
+                    <input type="text" placeholder="Type a message" value={message} onChange={(e)=>{setMessage(e.target.value)}}></input>
+                    <button onClick={handleSend}>➤</button>
+                </form>
             </div>
         </div>
     </>

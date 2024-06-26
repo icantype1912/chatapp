@@ -48,11 +48,12 @@ const App = ()=>{
         <Routes>
           <Route path="/" element={<FirstPage/>}/>
           <Route path="/login" element={<Login setUser = {setUser}/>}/>
-          <Route path="/signup" element={<SignUp setUser = {setUser}/>}/>
-          <Route path="/Details" element={<Details/>}/>
+          <Route path="/signup" element={<SignUp/>}/>
+          <Route path="/Details" element={<Details  setUser = {setUser}/>}/>
           <Route path = "*" element={<Navigate to ="/"/>}/>
         </Routes>:
         <Routes>
+        <Route path="/Details" element={<Details  setUser = {setUser}/>}/>
         <Route path="/mainpage" element={<MainPage user = {user} setUser = {setUser}/>}/>
         <Route path = "*" element={<Navigate to ="/mainpage"/>}/>
       </Routes>

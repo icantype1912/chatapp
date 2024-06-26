@@ -22,8 +22,7 @@ initializeApp(firebaseConfig);
 const auth = getAuth();
 console.log("This is getauth", getAuth());
 
-const SignUp = (props) => {
-  const { setUser } = props;
+const SignUp = () => {
   const [errState, setErrState] = useState("");
   const Navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -46,8 +45,7 @@ const SignUp = (props) => {
     }
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        setUser(userCredential.user.email);
-        Navigate("/mainpage");
+        Navigate("/details");
       })
       .catch((err) => {
         setErrState(err.message);
