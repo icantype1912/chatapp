@@ -29,6 +29,7 @@
 }
 
 .top{
+  border-bottom-style: solid;
   background-color:#303344;
   flex-grow: 2;
   display: flex;
