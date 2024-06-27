@@ -18,7 +18,6 @@ const firebaseConfig = {
 };
 
 initializeApp(firebaseConfig);
-//const analytics = getAnalytics(app);
 
 const auth = getAuth();
 const Login = (props) => {
@@ -41,7 +40,7 @@ const Login = (props) => {
   const handleClick = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        setUser(userCredential.user.displayName);
+        setUser({username:userCredential.user.displayName,email:userCredential.user.email,phone:userCredential.user.phone});
         console.log(userCredential.user)
         Navigate("/mainpage");
       })

@@ -51,12 +51,30 @@
   border-radius: 1ch;
   width: 8ch;
   height: 4ch;
-  background-color:crimson;
-  color: aliceblue;
   border-style: solid;
-  border-color: crimson;
   border-width: 1px;
 }
+
+#profile{
+  border-color: #1f1f2b00;
+  background-color: #1F1F2B;
+  border-radius: 3ch;
+  width: 6ch;
+  height: 6ch;
+  margin-right: 3ch;
+  background-color: aliceblue;
+}
+
+#profile:hover{
+  color: aliceblue;
+  background-color:#6D84F6;
+}
+
+.profile-icon{
+  margin-left: -6px;
+  margin-top: -1px;
+}
+
 
 .user-details button:hover{
   background-color:#303344;
@@ -387,3 +405,31 @@ body{
 }
 
 
+#pop{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 2ch;
+}
+
+#pop h3{
+  margin-top: 1ch;
+  margin-bottom: 1ch;
+  color: aliceblue;
+}
+
+#pop button{
+  width: 40%;
+  height: 4ch;
+  background-color: crimson;
+  border-style: none;
+  border-radius: 2px;
+  color: aliceblue;
+}
+
+#pop button:hover{
+  background-color:aliceblue;
+  color: crimson;
+  border-style: solid;
+  border-color: crimson;
+}

@@ -43,7 +43,7 @@ const Details = (props)=>{
         updateProfile(auth.currentUser,{
             displayName:userdetails.uname,phone:userdetails.phno,dob:userdetails.dob
         }).then(()=>{
-            setUser(auth.currentUser.displayName)
+            setUser({username:auth.currentUser.displayName,email:auth.currentUser.email,phone:auth.currentUser.phone})
             Navigate("/mainpage")
         }).catch((e)=>{console.log(e)})
     }
