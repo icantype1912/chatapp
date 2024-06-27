@@ -3,6 +3,22 @@ import { useState } from "react";
 import "../App.css"
 import { getAuth,updateProfile } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import {getFirestore,collection,addDoc} from "firebase/firestore"
+import { initializeApp } from "firebase/app";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCWPADseIx3PRGx3j4Tgh6TS9JOuwt2GE4",
+    authDomain: "chatapp-c4efb.firebaseapp.com",
+    databaseURL: "https://chatapp-c4efb-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "chatapp-c4efb",
+    storageBucket: "chatapp-c4efb.appspot.com",
+    messagingSenderId: "636388695939",
+    appId: "1:636388695939:web:670642ea7b197c9c8560b6",
+    measurementId: "G-MDS2Z8B9JL",
+  };
+
+const app = initializeApp(firebaseConfig)
+const db = getFirestore(app)
 
 const auth = getAuth()
 const Details = (props)=>{
@@ -17,6 +33,17 @@ const Details = (props)=>{
     const [errMessage,setErrMessage] = useState("")
     const [userdetails,setUserDetails] = useState({uname:"",phno:"",dob:""})
 
+    const addUser = async ()=>{
+        try {
+            const docRef = await addDoc(collection(db, "Users"), {
+              Name:userdetails.uname,
+              message:"does not matter"
+            });
+            console.log("Document written with ID: ", docRef.id);
+          } catch (e) {
+            console.error("Error adding document: ", e);
+          }
+    }
     const handleUsername = (e)=>{
         setUserDetails((prev)=>({...prev,uname:e.target.value}))
     }
@@ -44,6 +71,7 @@ const Details = (props)=>{
             displayName:userdetails.uname,phone:userdetails.phno,dob:userdetails.dob
         }).then(()=>{
             setUser({username:auth.currentUser.displayName,email:auth.currentUser.email,phone:auth.currentUser.phone})
+            addUser()
             Navigate("/mainpage")
         }).catch((e)=>{console.log(e)})
     }

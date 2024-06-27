@@ -11,7 +11,7 @@ const MainPage = (props)=>{
   const {user,setUser} = props
     return(
       <div className="parent-container">
-        <LeftConatainer/>
+        <LeftConatainer user = {user}/>
         <RightConatainer user = {user} setUser = {setUser}/>
       </div>
     )
