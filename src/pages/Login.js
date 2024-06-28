@@ -68,7 +68,6 @@ const Login = (props) => {
           }}
         ></input>
         <p className="signinerror">{err}</p>
-        <p>forgot password?</p>
         <button className={disabled?"disabledButton":"enabledButton"}
           disabled={disabled}
           onClick={handleClick}

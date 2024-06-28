@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from "react";
 import "../App.css"
-import { collection,query,getFirestore,onSnapshot } from "firebase/firestore";
+import { collection,query,getFirestore,onSnapshot, limit } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
@@ -18,21 +18,43 @@ const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
 
 const ContactList = (props) =>{
-    const {user,receiver,setReceiver} = props
+    const {user,receiver,setReceiver,scroller} = props
+    const [count,setCount] = useState(5)
     const [contacts,setContacts] = useState([])
     useEffect(()=>{
-        const q = query(collection(db, "Users"));
+        const q = query(collection(db, "Users"),limit(count));
         const unsub = onSnapshot(q,(snapshot)=>{
             let contactList = []
             snapshot.docs.forEach((doc)=>{
                 contactList.push({...doc.data()});
             })
-            console.log(contactList)
             contactList.unshift({Name:"GroupChat",message:"GC"})
             setContacts(contactList)
         })
         return ()=> unsub();
-      },[])
+      },[count])
+      useEffect(()=>{
+        const handleScroll =()=>{
+            if(scroller.current){
+                const { scrollTop, scrollHeight, clientHeight } = scroller.current;
+                if (scrollTop + clientHeight >= scrollHeight) {
+                    setCount((prev)=>{ return prev+5})
+                } 
+            }
+        }
+
+        const div = scroller.current
+        if(div){
+            div.addEventListener('scroll', handleScroll);
+        }
+
+        return () => {
+            if (div) {
+              div.removeEventListener('scroll', handleScroll);
+            }
+          };
+
+      },[scroller]);
     return<>
         <div className="contact-list">
         {contacts.filter((x)=>{return x.Name !== user.username}).map((x)=>{

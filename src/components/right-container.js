@@ -137,8 +137,8 @@ const RightConatainer = (props)=>{
                     }}
                       >
                         <div id="pop">
-                            <h3>Email : {user.email}</h3>
-                            <h3>Username : {user.username}</h3>
+                            <h3>{user.email}</h3>
+                            <h3>{user.username}</h3>
                             <button onClick={onLogOut}>LogOut</button>
                         </div>
                     </Popover>
