@@ -9,7 +9,8 @@ import { Link } from "react-router-dom";
 const firebaseConfig = {
   apiKey: "AIzaSyCWPADseIx3PRGx3j4Tgh6TS9JOuwt2GE4",
   authDomain: "chatapp-c4efb.firebaseapp.com",
-  databaseURL: "https://chatapp-c4efb-default-rtdb.asia-southeast1.firebasedatabase.app",
+  databaseURL:
+    "https://chatapp-c4efb-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "chatapp-c4efb",
   storageBucket: "chatapp-c4efb.appspot.com",
   messagingSenderId: "636388695939",

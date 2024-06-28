@@ -9,7 +9,8 @@ import { Link } from "react-router-dom";
 const firebaseConfig = {
   apiKey: "AIzaSyCWPADseIx3PRGx3j4Tgh6TS9JOuwt2GE4",
   authDomain: "chatapp-c4efb.firebaseapp.com",
-  databaseURL: "https://chatapp-c4efb-default-rtdb.asia-southeast1.firebasedatabase.app",
+  databaseURL:
+    "https://chatapp-c4efb-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "chatapp-c4efb",
   storageBucket: "chatapp-c4efb.appspot.com",
   messagingSenderId: "636388695939",
@@ -23,7 +24,7 @@ const auth = getAuth();
 const Login = (props) => {
   const { setUser } = props;
   const Navigate = useNavigate();
-  const [err,setErr] = useState("")
+  const [err, setErr] = useState("");
   const [disabled, setDisable] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -40,8 +41,12 @@ const Login = (props) => {
   const handleClick = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        setUser({username:userCredential.user.displayName,email:userCredential.user.email,phone:userCredential.user.phone});
-        console.log(userCredential.user)
+        setUser({
+          username: userCredential.user.displayName,
+          email: userCredential.user.email,
+          phone: userCredential.user.phone,
+        });
+        console.log(userCredential.user);
         Navigate("/mainpage");
       })
       .catch((err) => {
@@ -68,7 +73,8 @@ const Login = (props) => {
           }}
         ></input>
         <p className="signinerror">{err}</p>
-        <button className={disabled?"disabledButton":"enabledButton"}
+        <button
+          className={disabled ? "disabledButton" : "enabledButton"}
           disabled={disabled}
           onClick={handleClick}
         >
