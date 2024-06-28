@@ -25,13 +25,13 @@ const auth = getAuth()
 
 const RightConatainer = (props)=>{
     const Navigate = useNavigate()
-    const {user,setUser} = props
+    const {user,setUser,receiver} = props
     const ref = useRef()
     const time = new Date()
     const [popen,setPopen] = useState(false)
     const [message,setMessage] = useState("")
     const [messages,setMessages] = useState([])
-
+    
       useEffect(()=>{
         ref.current.scrollTop = ref.current.scrollHeight;
       },[messages])
@@ -42,16 +42,27 @@ const RightConatainer = (props)=>{
             snapshot.docs.forEach((doc)=>{
                 tasks.push({...doc.data()});
             })
-            setMessages(tasks)
+            console.log(tasks)
+            console.log(user.username)
+            console.log(receiver)
+            const newTasks = tasks.filter((x)=>{
+                if(((user.username === x.user)&&(x.receiver === receiver))||((user.username === x.receiver)&&(receiver === x.user))||((receiver === "GroupChat")&&(x.receiver === "GroupChat")))
+                    {
+                        return true
+                    }
+                return false
+            })
+            setMessages(newTasks)
         })
         return ()=> unsub();
-      },[])
+      },[receiver,user.username])
 
     const addUserToFirestore = async(mes)=>{
         try{
             const docRef = await addDoc(collection(db,"Chat"),{
                 message:mes,
                 user:user.username,
+                receiver:receiver,
                 time:time.getTime()
             });
             console.log("Added with doc id",docRef.id)
@@ -91,7 +102,7 @@ const RightConatainer = (props)=>{
     return<>
         <div className="right-container">
             <div className="top">
-                <h2>Group Chat</h2>
+                <h2>{receiver}</h2>
                 <div className="user-details">
                     <button id="profile" onClick={(e)=>setPopen(e.currentTarget)}>
                     <svg

@@ -18,7 +18,7 @@ const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
 
 const ContactList = (props) =>{
-    const {user} = props
+    const {user,receiver,setReceiver} = props
     const [contacts,setContacts] = useState([])
     useEffect(()=>{
         const q = query(collection(db, "Users"));
@@ -27,7 +27,8 @@ const ContactList = (props) =>{
             snapshot.docs.forEach((doc)=>{
                 contactList.push({...doc.data()});
             })
-            console.log("These are the contactLists",contactList)
+            console.log(contactList)
+            contactList.unshift({Name:"GroupChat",message:"GC"})
             setContacts(contactList)
         })
         return ()=> unsub();
@@ -35,7 +36,7 @@ const ContactList = (props) =>{
     return<>
         <div className="contact-list">
         {contacts.filter((x)=>{return x.Name !== user.username}).map((x)=>{
-            return <div className="contact-card">
+            return <div className={x.Name !== receiver?"contact-card":"selected-contact-card"} onClick={()=>{setReceiver(x.Name)}} >
                 <h3>{x.Name}</h3>
                 <p>{x.message}</p>
             </div>

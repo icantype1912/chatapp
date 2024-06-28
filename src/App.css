@@ -162,6 +162,7 @@
   border-style: none;
   padding: 1ch;
   margin-right: 0ch;
+  outline: none;
 }
 
 .bottom button{
@@ -223,6 +224,18 @@ body{
 .contact-card:hover{
   background-color: #6D84F6;
   cursor: pointer;
+}
+
+.selected-contact-card{
+  background-color: #6D84F6;
+  color: aliceblue;
+  border-radius: 1ch;
+  padding-left: 2ch;
+  padding-right: 2ch;
+  padding-bottom: 1ch;
+  width:100%;
+  margin: 1ch;
+  height: 10ch;
 }
 
 .login-table{
