@@ -44,7 +44,6 @@ const RightTop = (props) => {
           }}
         >
           <div id="pop">
-            <h3>{user.email}</h3>
             <h3>{user.username}</h3>
             <button onClick={onLogOut}>LogOut</button>
           </div>

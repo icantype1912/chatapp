@@ -13,7 +13,7 @@ const FirstPage = () => {
   };
   return (
     <div className="first-page">
-      <h1>Welcome to ChatApp</h1>
+      <h1>Welcome to BlueMessages</h1>
       <h2>Let's get started</h2>
       <button onClick={handleLogin}>Login</button>
       <button onClick={handleSignUp}>SignUp</button>
