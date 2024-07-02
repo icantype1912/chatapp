@@ -237,15 +237,16 @@ body::-webkit-scrollbar {
   margin-top: 3ch;
   padding: 2ch;
   background-color: #1f1f2b;
-  border-style: none;
+  border-style: solid;
+  border-color: #1F1F2B;
   border-radius: 1ch;
   outline: none;
   color: aliceblue;
 }
 
 .search:focus{
-  border-color: #fff;
-  border-style: inset;
+  border-color: aliceblue;
+  border-style: solid;
 }
 
 
