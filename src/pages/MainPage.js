@@ -7,7 +7,7 @@ import { useState } from "react";
 
 const MainPage = (props) => {
   const { user, setUser } = props;
-  const [receiver, setReceiver] = useState("GroupChat");
+  const [receiver, setReceiver] = useState("groupchat");
   return (
     <div className="parent-container">
       <LeftConatainer

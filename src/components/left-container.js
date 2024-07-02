@@ -13,7 +13,7 @@ const LeftConatainer = (props) => {
         <input
           type="text"
           className="search"
-          placeholder="Search"
+          placeholder="Search user"
           value={search}
           onChange={(e) => {
             setSearch(e.target.value);
@@ -27,7 +27,7 @@ const LeftConatainer = (props) => {
           setContactLoading={setContactLoading}
           search={search}
         />
-        {!contactLoading ? <span class="loader"></span> : <></>}
+        {contactLoading ? <span class="loader"></span> : <></>}
       </div>
     </>
   );

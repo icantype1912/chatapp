@@ -2,6 +2,7 @@ import React from "react";
 import "../App.css";
 import { useNavigate } from "react-router-dom";
 
+
 const FirstPage = () => {
   const Navigate = useNavigate();
   const handleLogin = () => {

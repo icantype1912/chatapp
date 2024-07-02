@@ -51,7 +51,7 @@ const RightConatainer = (props) => {
         if (
           (user.username === x.user && x.receiver === receiver) ||
           (user.username === x.receiver && receiver === x.user) ||
-          (receiver === "GroupChat" && x.receiver === "GroupChat")
+          (receiver === "groupchat" && x.receiver === "groupchat")
         ) {
           return true;
         }

@@ -24,21 +24,32 @@ const auth = getAuth();
 const Login = (props) => {
   const { setUser } = props;
   const Navigate = useNavigate();
-  const [err, setErr] = useState("");
+  const [loading,setLoading] = useState(false)
+  const [err, setErr] = useState("Please enter your valid email address");
   const [disabled, setDisable] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const handleSubmit = (e)=>{
+    e.preventDefault()
+    handleClick()
+  }
   const handleEmailChange = (e) => {
     const val = e.target.value;
     setEmail(val);
     if (val.match(emailRegex)) {
       setDisable(false);
+      if(err === "Please enter your valid email address")
+        {
+          setErr("")
+        }
     } else {
       setDisable(true);
+      setErr("Please enter your valid email address")
     }
   };
   const handleClick = () => {
+    setLoading(true)
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         setUser({
@@ -46,17 +57,29 @@ const Login = (props) => {
           email: userCredential.user.email,
           phone: userCredential.user.phone,
         });
-        console.log(userCredential.user);
+        console.log("this",userCredential.user);
+        setLoading(false)
         Navigate("/mainpage");
       })
       .catch((err) => {
-        setErr(err.message);
+        switch (err.code){
+          case "auth/invalid-credential":
+            setErr("Your Username and Password do not match")
+            break
+          case "auth/missing-password":
+            setErr("Please enter your password")
+            break
+          default:
+            setErr(err.code)
+        }
+        setLoading(false)
       });
   };
   return (
     <>
-      <div className="login-table">
+      <form className="login-table" onSubmit={handleSubmit}>
         <h1>Login</h1>
+        <p id="labels">Email</p>
         <input
           name="email"
           type="text"
@@ -64,6 +87,7 @@ const Login = (props) => {
           value={email}
           onChange={(e) => handleEmailChange(e)}
         ></input>
+        <p id="labels">Password</p>
         <input
           type="password"
           placeholder="Password"
@@ -73,17 +97,18 @@ const Login = (props) => {
           }}
         ></input>
         <p className="signinerror">{err}</p>
+        {!loading?
         <button
           className={disabled ? "disabledButton" : "enabledButton"}
           disabled={disabled}
           onClick={handleClick}
         >
           Login
-        </button>
+        </button>:<span className="load"></span>}
         <p>
           Don't have an account? <Link to="/signup">signup</Link>
         </p>
-      </div>
+      </form>
     </>
   );
 };

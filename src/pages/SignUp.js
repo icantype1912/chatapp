@@ -2,9 +2,10 @@ import React from "react";
 import { useState } from "react";
 import "../App.css";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { updateProfile } from "firebase/auth";
 import { initializeApp } from "firebase/app";
-import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { getFirestore,addDoc,collection } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCWPADseIx3PRGx3j4Tgh6TS9JOuwt2GE4",
@@ -18,68 +19,121 @@ const firebaseConfig = {
   measurementId: "G-MDS2Z8B9JL",
 };
 
-initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 const auth = getAuth();
 console.log("This is getauth", getAuth());
 
-const SignUp = () => {
+const SignUp = (props) => {
+  const { setUser } = props;
+  const [username,setUsername] = useState("")
+  const [loading,setLoading] = useState(false)
   const [errState, setErrState] = useState("");
-  const Navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const passwordRegex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+  const handleSubmit = (e)=>{
+    e.preventDefault()
+    handleClick()
+  }
+  const addUser = async () => {
+    try {
+      const docRef = await addDoc(collection(db, "Users"), {
+        Name: username.toLowerCase(),
+        message: "does not matter",
+      });
+      console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  };
   const handleClick = () => {
+    setLoading(true)
     if (!email.match(emailRegex)) {
+      setLoading(false)
       setErrState("Invalid email");
       return;
     }
     if (!password.match(passwordRegex)) {
-      setErrState("Min-8 charectars atleast 1 charectar of each type");
+      setLoading(false)
+      setErrState("Password must be min-8 charectars and must contain atleast one uppercase,lowercase,digit and a symbol");
       return;
     }
     if (password !== confirm) {
+      setLoading(false)
       setErrState("Password and confirm password should be the same");
       return;
     }
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        Navigate("/details");
+        setLoading(false)
+        updateProfile(auth.currentUser, {
+          displayName: username.toLowerCase(),
+        })
+          .then(() => {
+            setUser({
+              username: auth.currentUser.displayName,
+              email: auth.currentUser.email,
+            });
+            addUser();
+          })
+          .catch((e) => {
+            console.log(e);
+          });
       })
       .catch((err) => {
-        setErrState(err.message);
+        switch(err.code){
+          case "auth/email-already-in-use":
+            setErrState("Email already in use")
+            break
+          default:
+            setErrState(err.code)
+        }
+        setLoading(false)
       });
   };
   return (
     <>
-      <div className="signup-table">
+      <form onSubmit = {handleSubmit} className="signup-table">
         <h1>SignUp</h1>
+        <p id="labels">Email</p>
         <input
           type="text"
-          placeholder="email"
+          placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         ></input>
+        <p id="labels">Username</p>
+        <input
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        ></input>
+        <p id="labels">Password</p>
         <input
           type="password"
           placeholder="Create Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         ></input>
+        <p id="labels">Confirm Password</p>
         <input
           type="password"
           placeholder="Confirm Password"
           value={confirm}
           onChange={(e) => setConfirm(e.target.value)}
         ></input>
-        <button onClick={handleClick}>SignUp</button>
+        {!loading?
+        <button onClick={handleClick}>SignUp</button>:<span className="load"></span>}
         <p className="signinerror">{errState}</p>
         <p>
-          Already have an account?<Link to="/login">Login</Link>
+          Already have an account? <Link to="/login">Login</Link>
         </p>
-      </div>
+      </form>
     </>
   );
 };

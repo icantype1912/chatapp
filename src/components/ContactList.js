@@ -34,8 +34,8 @@ const ContactList = (props) => {
     setContactLoading(true);
     const q = query(
       collection(db, "Users"),
-      where("Name", ">=", search),
-      where("Name", "<=", search + "\uf8ff"),
+      where("Name", ">=", search.toLowerCase()),
+      where("Name", "<=", search.toLowerCase() + "\uf8ff"),
       limit(count)
     );
     const unsub = onSnapshot(q, (snapshot) => {
@@ -90,7 +90,7 @@ const ContactList = (props) => {
                   setReceiver(x.Name);
                 }}
               >
-                <h3>{x.Name}</h3>
+                <h3 className="receiver-name">{x.Name}</h3>
                 <p>{x.message}</p>
               </div>
             );

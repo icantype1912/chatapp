@@ -1,5 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap");
-
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 .parent-container {
   height: 100vh;
   display: flex;
@@ -58,15 +57,18 @@
   border-color: #1f1f2b00;
   background-color: #1f1f2b;
   border-radius: 3ch;
-  width: 6ch;
-  height: 6ch;
+  width: 5ch;
+  height: 5ch;
   margin-right: 3ch;
+  padding-top: 1px;
+  padding-right: 2px;
   background-color: aliceblue;
 }
 
 #profile:hover {
   color: aliceblue;
   background-color: #6d84f6;
+  cursor: pointer;
 }
 
 .profile-icon {
@@ -80,6 +82,7 @@
   border-style: solid;
   border-color: crimson;
   border-width: 1px;
+  cursor: pointer;
 }
 
 .top h2 {
@@ -151,25 +154,28 @@
 
 .bottom input {
   height: 4ch;
-  width: 90%;
+  width: 85%;
   border-radius: 2ch;
   border-style: none;
   padding: 1ch;
+  padding-left: 2ch;
+  padding-right: 2ch;
   margin-right: 0ch;
   outline: none;
 }
 
 .bottom button {
-  height: 6ch;
-  width: 6ch;
+  width: 4ch;
   border-radius: 4ch;
   margin-left: 0ch;
   border-style: none;
+  font-size: larger;
 }
 
 .bottom button:hover {
   background-color: #6d84f6;
   color: aliceblue;
+  cursor: pointer;
 }
 
 html {
@@ -181,13 +187,20 @@ body {
   margin: 0;
   padding: 0;
   background-color: #1f1f2b;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  background-color: #000000;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1600 800'%3E%3Cg %3E%3Cpolygon fill='%23161a31' points='1600 160 0 460 0 350 1600 50'/%3E%3Cpolygon fill='%232c3562' points='1600 260 0 560 0 450 1600 150'/%3E%3Cpolygon fill='%23414f94' points='1600 360 0 660 0 550 1600 250'/%3E%3Cpolygon fill='%23576ac5' points='1600 460 0 760 0 650 1600 350'/%3E%3Cpolygon fill='%236D84F6' points='1600 800 0 800 0 750 1600 450'/%3E%3C/g%3E%3C/svg%3E");
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 .search {
   width: 85%;
   height: 4ch;
   margin-top: 3ch;
-  padding: 1ch;
+  padding: 2ch;
   background-color: #1f1f2b;
   border-style: none;
   border-radius: 1ch;
@@ -218,6 +231,7 @@ body {
 .contact-card:hover {
   background-color: #6d84f6;
   cursor: pointer;
+  cursor: pointer;
 }
 
 .selected-contact-card {
@@ -232,10 +246,11 @@ body {
   height: 10ch;
 }
 
+
 .login-table {
   width: 50ch;
   margin: auto;
-  margin-top: 10ch;
+  margin-top: 9ch;
   height: 45ch;
   align-items: center;
   border-radius: 1ch;
@@ -245,6 +260,11 @@ body {
   justify-content: space-between;
 }
 
+.login-table h1{
+  font-style: normal;
+  margin-bottom: 5px;
+}
+
 .login-table input {
   width: 80%;
   height: 5ch;
@@ -252,7 +272,15 @@ body {
   border-style: solid;
   border-color: #303344;
   padding: 1px;
-  padding-left: 5px;
+  padding-left: 10px;
+}
+
+#labels{
+  align-self: self-start;
+  margin-left: 6ch;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  font-size: small;
 }
 
 .enabledButton {
@@ -287,14 +315,19 @@ body {
 .signup-table {
   width: 50ch;
   margin: auto;
-  margin-top: 10ch;
-  height: 45ch;
+  margin-top: 7ch;
+  height: 50ch;
   align-items: center;
   border-radius: 1ch;
   background-color: aliceblue;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.signup-table h1{
+  font-style: normal;
+  margin-bottom: 5px;
 }
 
 .signup-table input {
@@ -304,13 +337,13 @@ body {
   border-style: solid;
   border-color: #303344;
   padding: 1px;
-  margin-bottom: 1ch;
-  padding-left: 5px;
+  margin-bottom: 8px;
+  padding-left: 10px;
 }
 
 .signup-table button {
-  height: 5ch;
-  width: 80%;
+  height: 6ch;
+  width: 82%;
   background-color: #6d84f6;
   border-radius: 1ch;
   border-style: none;
@@ -326,7 +359,7 @@ body {
 .details-table {
   width: 50ch;
   margin: auto;
-  margin-top: 10ch;
+  margin-top: 7ch;
   height: 45ch;
   align-items: center;
   border-radius: 1ch;
@@ -344,11 +377,11 @@ body {
   border-color: #303344;
   padding: 1px;
   margin-bottom: 1ch;
-  padding-left: 5px;
+  padding-left: 10px;
 }
 
 .details-table button {
-  margin-bottom: 2ch;
+  margin-bottom: 3ch;
   height: 6ch;
   width: 80%;
   background-color: #6d84f6;
@@ -365,10 +398,11 @@ body {
 
 .error {
   color: red;
+  margin-bottom: 0;
 }
 
 .first-page {
-  margin-top: 10ch;
+  margin-top: 8ch;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -403,6 +437,7 @@ body {
 
 .signinerror {
   color: rgba(255, 0, 0, 0.723);
+  text-align: center;
 }
 
 .sendMes {
@@ -438,11 +473,12 @@ body {
   color: crimson;
   border-style: solid;
   border-color: crimson;
+  cursor: pointer;
 }
 
 .loader {
-  width: 8px;
-  height: 8px;
+  width: 16px;
+  height: 16px;
   border: 3px solid #fff;
   border-bottom-color: transparent;
   border-radius: 50%;
@@ -460,3 +496,24 @@ body {
     transform: rotate(360deg);
   }
 }
+
+.load{
+    width: 24px;
+    height: 24px;
+    border: 5px solid #6d84f6;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+    }
+
+    @keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+} 
+

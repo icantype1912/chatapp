@@ -41,7 +41,7 @@ const Details = (props) => {
   const addUser = async () => {
     try {
       const docRef = await addDoc(collection(db, "Users"), {
-        Name: userdetails.uname,
+        Name: userdetails.uname.toLowerCase(),
         message: "does not matter",
       });
       console.log("Document written with ID: ", docRef.id);
@@ -54,6 +54,11 @@ const Details = (props) => {
   };
 
   const handlePhno = (e) => {
+    if(isNaN(e.target.value))
+      {
+        setUserDetails((prev) => ({ ...prev, phno: "" }));
+        return
+      }
     setUserDetails((prev) => ({ ...prev, phno: e.target.value }));
   };
 
@@ -71,17 +76,19 @@ const Details = (props) => {
       return;
     }
     updateProfile(auth.currentUser, {
-      displayName: userdetails.uname,
-      phone: userdetails.phno,
+      displayName: userdetails.uname.toLowerCase(),
+      phoneNumber: userdetails.phno,
       dob: userdetails.dob,
     })
       .then(() => {
         setUser({
           username: auth.currentUser.displayName,
           email: auth.currentUser.email,
-          phone: auth.currentUser.phone,
+          phone: auth.currentUser.phoneNumber,
+          dob:auth.currentUser.dob
         });
         addUser();
+        console.log("this is user",auth.currentUser)
         Navigate("/mainpage");
       })
       .catch((e) => {
@@ -92,7 +99,7 @@ const Details = (props) => {
   return (
     <>
       <div className="details-table">
-        <h1>More Details</h1>
+        <h1>User Details</h1>
         <input
           value={userdetails.uname}
           onChange={handleUsername}
