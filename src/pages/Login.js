@@ -1,6 +1,5 @@
 import React from "react";
 import { useState } from "react";
-import "../App.css";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { useNavigate } from "react-router-dom";
@@ -23,33 +22,32 @@ initializeApp(firebaseConfig);
 const auth = getAuth();
 const Login = (props) => {
   const { setUser } = props;
-  const Navigate = useNavigate();
-  const [loading,setLoading] = useState(false)
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [err, setErr] = useState("Please enter your valid email address");
   const [disabled, setDisable] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  const handleSubmit = (e)=>{
-    e.preventDefault()
-    handleClick()
-  }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleClick();
+  };
   const handleEmailChange = (e) => {
     const val = e.target.value;
     setEmail(val);
     if (val.match(emailRegex)) {
       setDisable(false);
-      if(err === "Please enter your valid email address")
-        {
-          setErr("")
-        }
+      if (err === "Please enter your valid email address") {
+        setErr("");
+      }
     } else {
       setDisable(true);
-      setErr("Please enter your valid email address")
+      setErr("Please enter your valid email address");
     }
   };
   const handleClick = () => {
-    setLoading(true)
+    setLoading(true);
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         setUser({
@@ -57,22 +55,21 @@ const Login = (props) => {
           email: userCredential.user.email,
           phone: userCredential.user.phone,
         });
-        console.log("this",userCredential.user);
-        setLoading(false)
-        Navigate("/mainpage");
+        setLoading(false);
+        navigate("/mainpage");
       })
       .catch((err) => {
-        switch (err.code){
+        switch (err.code) {
           case "auth/invalid-credential":
-            setErr("Your Username and Password do not match")
-            break
+            setErr("Your Username and Password do not match");
+            break;
           case "auth/missing-password":
-            setErr("Please enter your password")
-            break
+            setErr("Please enter your password");
+            break;
           default:
-            setErr(err.code)
+            setErr(err.code);
         }
-        setLoading(false)
+        setLoading(false);
       });
   };
   return (
@@ -97,14 +94,17 @@ const Login = (props) => {
           }}
         ></input>
         <p className="signinerror">{err}</p>
-        {!loading?
-        <button
-          className={disabled ? "disabledButton" : "enabledButton"}
-          disabled={disabled}
-          onClick={handleClick}
-        >
-          Login
-        </button>:<span className="load"></span>}
+        {!loading ? (
+          <button
+            className={disabled ? "disabledButton" : "enabledButton"}
+            disabled={disabled}
+            onClick={handleClick}
+          >
+            Login
+          </button>
+        ) : (
+          <span className="load"></span>
+        )}
         <p>
           Don't have an account? <Link to="/signup">signup</Link>
         </p>

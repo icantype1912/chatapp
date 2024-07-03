@@ -1,5 +1,4 @@
 import React from "react";
-import "../App.css";
 import { Popover } from "@mui/material";
 
 const RightTop = (props) => {

@@ -11,14 +11,11 @@ import FirstPage from "./pages/FirstPage";
 const App = () => {
   const [user, setUser] = useState(null);
 
-  console.log("This is the user", user, typeof user);
   useEffect(() => {
     const storedUser = window.localStorage.getItem("user");
     if (storedUser) {
       try {
-        console.log("worked");
         setUser(JSON.parse(storedUser));
-        console.log("parsed");
       } catch (error) {
         console.error("Failed to parse");
       }
@@ -35,15 +32,15 @@ const App = () => {
 
   return (
     <>
-    <div id="branding">
-      <h1>BlueMessages</h1>
-    </div>
+      <div id="branding">
+        <h1>BlueMessages</h1>
+      </div>
       <BrowserRouter>
         {user === null ? (
           <Routes>
             <Route path="/" element={<FirstPage />} />
             <Route path="/login" element={<Login setUser={setUser} />} />
-            <Route path="/signup" element={<SignUp setUser={setUser}/>} />
+            <Route path="/signup" element={<SignUp setUser={setUser} />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         ) : (

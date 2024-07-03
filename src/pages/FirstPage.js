@@ -1,15 +1,13 @@
 import React from "react";
-import "../App.css";
 import { useNavigate } from "react-router-dom";
 
-
 const FirstPage = () => {
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
   const handleLogin = () => {
-    Navigate("/login");
+    navigate("/login");
   };
   const handleSignUp = () => {
-    Navigate("/signup");
+    navigate("/signup");
   };
   return (
     <div className="first-page">

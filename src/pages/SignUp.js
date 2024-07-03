@@ -1,11 +1,10 @@
 import React from "react";
 import { useState } from "react";
-import "../App.css";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { updateProfile } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { Link } from "react-router-dom";
-import { getFirestore,addDoc,collection } from "firebase/firestore";
+import { getFirestore, addDoc, collection } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCWPADseIx3PRGx3j4Tgh6TS9JOuwt2GE4",
@@ -23,53 +22,53 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const auth = getAuth();
-console.log("This is getauth", getAuth());
 
 const SignUp = (props) => {
   const { setUser } = props;
-  const [username,setUsername] = useState("")
-  const [loading,setLoading] = useState(false)
+  const [username, setUsername] = useState("");
+  const [loading, setLoading] = useState(false);
   const [errState, setErrState] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const passwordRegex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-  const handleSubmit = (e)=>{
-    e.preventDefault()
-    handleClick()
-  }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleClick();
+  };
   const addUser = async () => {
     try {
-      const docRef = await addDoc(collection(db, "Users"), {
+      await addDoc(collection(db, "Users"), {
         Name: username.toLowerCase(),
         message: "does not matter",
       });
-      console.log("Document written with ID: ", docRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);
     }
   };
   const handleClick = () => {
-    setLoading(true)
+    setLoading(true);
     if (!email.match(emailRegex)) {
-      setLoading(false)
+      setLoading(false);
       setErrState("Invalid email");
       return;
     }
     if (!password.match(passwordRegex)) {
-      setLoading(false)
-      setErrState("Password must be min-8 charectars and must contain atleast one uppercase,lowercase,digit and a symbol");
+      setLoading(false);
+      setErrState(
+        "Password must be min-8 charectars and must contain atleast one uppercase,lowercase,digit and a symbol"
+      );
       return;
     }
     if (password !== confirm) {
-      setLoading(false)
+      setLoading(false);
       setErrState("Password and confirm password should be the same");
       return;
     }
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        setLoading(false)
+        setLoading(false);
         updateProfile(auth.currentUser, {
           displayName: username.toLowerCase(),
         })
@@ -85,19 +84,19 @@ const SignUp = (props) => {
           });
       })
       .catch((err) => {
-        switch(err.code){
+        switch (err.code) {
           case "auth/email-already-in-use":
-            setErrState("Email already in use")
-            break
+            setErrState("Email already in use");
+            break;
           default:
-            setErrState(err.code)
+            setErrState(err.code);
         }
-        setLoading(false)
+        setLoading(false);
       });
   };
   return (
     <>
-      <form onSubmit = {handleSubmit} className="signup-table">
+      <form onSubmit={handleSubmit} className="signup-table">
         <h1>SignUp</h1>
         <p id="labels">Email</p>
         <input
@@ -127,8 +126,11 @@ const SignUp = (props) => {
           value={confirm}
           onChange={(e) => setConfirm(e.target.value)}
         ></input>
-        {!loading?
-        <button onClick={handleClick}>SignUp</button>:<span className="load"></span>}
+        {!loading ? (
+          <button onClick={handleClick}>SignUp</button>
+        ) : (
+          <span className="load"></span>
+        )}
         <p className="signinerror">{errState}</p>
         <p>
           Already have an account? <Link to="/login">Login</Link>

@@ -7,7 +7,6 @@ import { addDoc, collection, query, onSnapshot } from "firebase/firestore";
 import { signOut, getAuth } from "firebase/auth";
 import RightBottom from "./RightBottom";
 import RightTop from "./RightTop";
-import "../App.css";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCWPADseIx3PRGx3j4Tgh6TS9JOuwt2GE4",
@@ -26,7 +25,7 @@ const db = getFirestore(app);
 const auth = getAuth();
 
 const RightConatainer = (props) => {
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
   const { user, setUser, receiver } = props;
   const ref = useRef();
   const time = new Date();
@@ -44,19 +43,12 @@ const RightConatainer = (props) => {
       snapshot.docs.forEach((doc) => {
         tasks.push({ ...doc.data() });
       });
-      console.log(tasks);
-      console.log(user.username);
-      console.log(receiver);
-      const newTasks = tasks.filter((x) => {
-        if (
+      const newTasks = tasks.filter(
+        (x) =>
           (user.username === x.user && x.receiver === receiver) ||
           (user.username === x.receiver && receiver === x.user) ||
           (receiver === "groupchat" && x.receiver === "groupchat")
-        ) {
-          return true;
-        }
-        return false;
-      });
+      );
       setMessages(newTasks);
     });
     return () => unsub();
@@ -64,13 +56,12 @@ const RightConatainer = (props) => {
 
   const addUserToFirestore = async (mes) => {
     try {
-      const docRef = await addDoc(collection(db, "Chat"), {
+      await addDoc(collection(db, "Chat"), {
         message: mes,
         user: user.username,
         receiver: receiver,
         time: time.getTime(),
       });
-      console.log("Added with doc id", docRef.id);
     } catch (err) {
       console.error(err);
     }
@@ -79,9 +70,8 @@ const RightConatainer = (props) => {
   const onLogOut = () => {
     signOut(auth)
       .then(() => {
-        console.log("logged out");
         setUser(null);
-        Navigate("/login");
+        navigate("/login");
       })
       .catch((error) => {
         console.log(error);

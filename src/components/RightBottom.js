@@ -1,6 +1,5 @@
 import React from "react";
-import "../App.css";
-import SendIcon from '@mui/icons-material/Send';
+import SendIcon from "@mui/icons-material/Send";
 
 const RightBottom = (props) => {
   const { handleSubmit, message, setMessage, handleSend } = props;
@@ -15,7 +14,9 @@ const RightBottom = (props) => {
             setMessage(e.target.value);
           }}
         ></input>
-        <button onClick={handleSend}><SendIcon fontSize = "md" sx={{transform:"rotate(-40deg)"}}/></button>
+        <button onClick={handleSend}>
+          <SendIcon fontSize="md" sx={{ transform: "rotate(-40deg)" }} />
+        </button>
       </form>
     </div>
   );

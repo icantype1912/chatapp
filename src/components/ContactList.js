@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "../App.css";
 import {
   collection,
   query,
@@ -43,7 +42,6 @@ const ContactList = (props) => {
       snapshot.docs.forEach((doc) => {
         contactList.push({ ...doc.data() });
       });
-      console.log("This is search", search);
       setContacts(contactList);
       setContactLoading(false);
     });

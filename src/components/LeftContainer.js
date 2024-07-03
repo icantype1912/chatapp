@@ -1,5 +1,4 @@
 import React, { useState, useRef } from "react";
-import "../App.css";
 import ContactList from "./ContactList";
 
 const LeftConatainer = (props) => {
