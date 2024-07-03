@@ -5,26 +5,25 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, orderBy } from "firebase/firestore";
 import { addDoc, collection, query, onSnapshot } from "firebase/firestore";
 import { signOut, getAuth } from "firebase/auth";
-import RightBottom from "./RightBottom";
-import RightTop from "./RightTop";
+import SendText from "./SendText";
+import MessagesHeader from "./MessagesHeader";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCWPADseIx3PRGx3j4Tgh6TS9JOuwt2GE4",
-  authDomain: "chatapp-c4efb.firebaseapp.com",
-  databaseURL:
-    "https://chatapp-c4efb-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "chatapp-c4efb",
-  storageBucket: "chatapp-c4efb.appspot.com",
-  messagingSenderId: "636388695939",
-  appId: "1:636388695939:web:670642ea7b197c9c8560b6",
-  measurementId: "G-MDS2Z8B9JL",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth();
 
-const RightConatainer = (props) => {
+const Messages = (props) => {
   const navigate = useNavigate();
   const { user, setUser, receiver } = props;
   const ref = useRef();
@@ -95,7 +94,7 @@ const RightConatainer = (props) => {
   return (
     <>
       <div className="right-container">
-        <RightTop
+        <MessagesHeader
           receiver={receiver}
           user={user}
           popen={popen}
@@ -120,7 +119,7 @@ const RightConatainer = (props) => {
           })}
         </div>
 
-        <RightBottom
+        <SendText
           handleSubmit={handleSubmit}
           message={message}
           setMessage={setMessage}
@@ -131,4 +130,4 @@ const RightConatainer = (props) => {
   );
 };
 
-export default RightConatainer;
+export default Messages;

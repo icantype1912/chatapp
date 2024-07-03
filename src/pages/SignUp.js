@@ -5,17 +5,17 @@ import { updateProfile } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { Link } from "react-router-dom";
 import { getFirestore, addDoc, collection } from "firebase/firestore";
+import {emailValidator,passwordValidator} from "../validator.js"
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCWPADseIx3PRGx3j4Tgh6TS9JOuwt2GE4",
-  authDomain: "chatapp-c4efb.firebaseapp.com",
-  databaseURL:
-    "https://chatapp-c4efb-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "chatapp-c4efb",
-  storageBucket: "chatapp-c4efb.appspot.com",
-  messagingSenderId: "636388695939",
-  appId: "1:636388695939:web:670642ea7b197c9c8560b6",
-  measurementId: "G-MDS2Z8B9JL",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);
@@ -31,8 +31,6 @@ const SignUp = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  const passwordRegex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
   const handleSubmit = (e) => {
     e.preventDefault();
     handleClick();
@@ -49,12 +47,12 @@ const SignUp = (props) => {
   };
   const handleClick = () => {
     setLoading(true);
-    if (!email.match(emailRegex)) {
+    if (!emailValidator(email)) {
       setLoading(false);
       setErrState("Invalid email");
       return;
     }
-    if (!password.match(passwordRegex)) {
+    if (!passwordValidator(password)) {
       setLoading(false);
       setErrState(
         "Password must be min-8 charectars and must contain atleast one uppercase,lowercase,digit and a symbol"

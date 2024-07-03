@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import ContactList from "./ContactList";
 
-const LeftConatainer = (props) => {
+const Contacts = (props) => {
   const scroller = useRef();
   const { user, receiver, setReceiver } = props;
   const [search, setSearch] = useState("");
@@ -32,4 +32,4 @@ const LeftConatainer = (props) => {
   );
 };
 
-export default LeftConatainer;
+export default Contacts;

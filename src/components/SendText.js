@@ -1,7 +1,7 @@
 import React from "react";
 import SendIcon from "@mui/icons-material/Send";
 
-const RightBottom = (props) => {
+const SendText = (props) => {
   const { handleSubmit, message, setMessage, handleSend } = props;
   return (
     <div className="bottom">
@@ -22,4 +22,4 @@ const RightBottom = (props) => {
   );
 };
 
-export default RightBottom;
+export default SendText;

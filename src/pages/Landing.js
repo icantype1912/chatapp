@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const FirstPage = () => {
+const Landing = () => {
   const navigate = useNavigate();
   const handleLogin = () => {
     navigate("/login");
@@ -19,4 +19,4 @@ const FirstPage = () => {
   );
 };
 
-export default FirstPage;
+export default Landing;

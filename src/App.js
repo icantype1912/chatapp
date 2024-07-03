@@ -1,12 +1,15 @@
 import React from "react";
+import { lazy,Suspense } from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
 import "./App.css";
-import MainPage from "./pages/MainPage";
-import Login from "./pages/Login";
-import SignUp from "./pages/SignUp";
-import FirstPage from "./pages/FirstPage";
+const Home = lazy(()=>import("./pages/Home"))
+const Login = lazy(()=>import("./pages/Login"))
+const SignUp = lazy(()=>import("./pages/SignUp"))
+const Landing = lazy(()=>import("./pages/Landing"))
+const NotFound = lazy(()=>import("./pages/NotFound"))
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -32,27 +35,36 @@ const App = () => {
 
   return (
     <>
+    <ErrorBoundary fallback={<div className="error-boundary">
+      <h1>Something went wrong!</h1>
+      <h2>Refresh the page or try again later</h2>
+    </div>}>
       <div id="branding">
         <h1>BlueMessages</h1>
       </div>
       <BrowserRouter>
+      <Suspense fallback={<span className="loader2"></span>}>
         {user === null ? (
           <Routes>
-            <Route path="/" element={<FirstPage />} />
+            <Route path="/" element={<Landing />} />
             <Route path="/login" element={<Login setUser={setUser} />} />
             <Route path="/signup" element={<SignUp setUser={setUser} />} />
-            <Route path="*" element={<Navigate to="/" />} />
+            <Route path="/404" element={<NotFound />}/>
+            <Route path="*" element={<Navigate to="/404"/>} />
           </Routes>
         ) : (
           <Routes>
             <Route
-              path="/mainpage"
-              element={<MainPage user={user} setUser={setUser} />}
+              path="/"
+              element={<Home user={user} setUser={setUser} />}
             />
-            <Route path="*" element={<Navigate to="/mainpage" />} />
+            <Route path="/404" element={<NotFound />}/>
+            <Route path="*" element={<Navigate to="/404" />} />
           </Routes>
         )}
+      </Suspense>
       </BrowserRouter>
+      </ErrorBoundary>
     </>
   );
 };

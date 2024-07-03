@@ -1,23 +1,23 @@
 import React from "react";
-import LeftConatainer from "../components/LeftContainer";
-import RightConatainer from "../components/RightContainer";
+import Contacts from "../components/Contacts";
+import Messages from "../components/Messages";
 import { useState } from "react";
 
-const MainPage = (props) => {
+const Home = (props) => {
   const { user, setUser } = props;
   const [receiver, setReceiver] = useState("groupchat");
   return (
     <div id="grandparent-container">
       <div className="parent-container">
-        <LeftConatainer
+        <Contacts
           user={user}
           receiver={receiver}
           setReceiver={setReceiver}
         />
-        <RightConatainer user={user} setUser={setUser} receiver={receiver} />
+        <Messages user={user} setUser={setUser} receiver={receiver} />
       </div>
     </div>
   );
 };
 
-export default MainPage;
+export default Home;

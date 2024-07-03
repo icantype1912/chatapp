@@ -4,17 +4,17 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { emailValidator } from "../validator";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCWPADseIx3PRGx3j4Tgh6TS9JOuwt2GE4",
-  authDomain: "chatapp-c4efb.firebaseapp.com",
-  databaseURL:
-    "https://chatapp-c4efb-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "chatapp-c4efb",
-  storageBucket: "chatapp-c4efb.appspot.com",
-  messagingSenderId: "636388695939",
-  appId: "1:636388695939:web:670642ea7b197c9c8560b6",
-  measurementId: "G-MDS2Z8B9JL",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
 
 initializeApp(firebaseConfig);
@@ -28,7 +28,6 @@ const Login = (props) => {
   const [disabled, setDisable] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const handleSubmit = (e) => {
     e.preventDefault();
     handleClick();
@@ -36,7 +35,7 @@ const Login = (props) => {
   const handleEmailChange = (e) => {
     const val = e.target.value;
     setEmail(val);
-    if (val.match(emailRegex)) {
+    if (!emailValidator(email)) {
       setDisable(false);
       if (err === "Please enter your valid email address") {
         setErr("");
@@ -56,7 +55,7 @@ const Login = (props) => {
           phone: userCredential.user.phone,
         });
         setLoading(false);
-        navigate("/mainpage");
+        navigate("/");
       })
       .catch((err) => {
         switch (err.code) {
@@ -106,7 +105,7 @@ const Login = (props) => {
           <span className="load"></span>
         )}
         <p>
-          Don't have an account? <Link to="/signup">signup</Link>
+          Don't have an account? <Link to="/signup">Signup</Link>
         </p>
       </form>
     </>

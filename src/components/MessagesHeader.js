@@ -1,7 +1,7 @@
 import React from "react";
 import { Popover } from "@mui/material";
 
-const RightTop = (props) => {
+const MessagesHeader = (props) => {
   const { receiver, user, popen, setPopen, onLogOut } = props;
   return (
     <div className="top">
@@ -52,4 +52,4 @@ const RightTop = (props) => {
   );
 };
 
-export default RightTop;
+export default MessagesHeader;
