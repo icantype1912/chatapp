@@ -47,56 +47,57 @@ const SignUp = (props) => {
       console.error("Error adding document: ", e);
     }
   };
-  const handleClick = async() => {
-  try{
-    setLoading(true);
-    if (!emailValidator(email)) {
-      setLoading(false);
-      setErrState("Invalid email");
-      return;
-    }
-    if (!passwordValidator(password)) {
-      setLoading(false);
-      setErrState(
-        "Password must be min-8 charectars and must contain atleast one uppercase,lowercase,digit and a symbol"
-      );
-      return;
-    }
-    if (password !== confirm) {
-      setLoading(false);
-      setErrState("Password and confirm password should be the same");
-      return;
-    }
-    await createUserWithEmailAndPassword(auth, email, password)
+  const handleClick = async () => {
+    try {
+      setLoading(true);
+  
+      if (!emailValidator(email)) {
         setLoading(false);
-        updateProfile(auth.currentUser, {
-          displayName: username.toLowerCase(),
-        })
-          .then(() => {
-            setUser({
-              username: auth.currentUser.displayName,
-              email: auth.currentUser.email,
-            });
-            addUser();
-          })
-          .catch((e) => {
-            console.log(e);
-          });
+        setErrState("Invalid email");
+        return;
       }
-      catch(err) {
-        switch (err.code) {
-          case "auth/email-already-in-use":
-            setErrState("Email already in use");
-            break;
-          default:
-            setErrState(err.code);
-        }
+  
+      if (!passwordValidator(password)) {
         setLoading(false);
+        setErrState(
+          "Password must be min-8 characters and must contain at least one uppercase, lowercase, digit, and a symbol"
+        );
+        return;
       }
-      finally{
-        navigate("/")
+  
+      if (password !== confirm) {
+        setLoading(false);
+        setErrState("Password and confirm password should be the same");
+        return;
       }
+  
+      await createUserWithEmailAndPassword(auth, email, password);
+      
+      await updateProfile(auth.currentUser, {
+        displayName: username.toLowerCase(),
+      });
+  
+      setUser({
+        username: auth.currentUser.displayName,
+        email: auth.currentUser.email,
+      });
+  
+      await addUser();
+  
+      navigate("/");
+    } catch (err) {
+      switch (err.code) {
+        case "auth/email-already-in-use":
+          setErrState("Email already in use");
+          break;
+        default:
+          setErrState(err.code);
+      }
+    } finally {
+      setLoading(false);
+    }
   };
+  
   return (
     <>
       <form onSubmit={handleSubmit} className="signup-table">
