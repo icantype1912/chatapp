@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { updateProfile } from "firebase/auth";
 import { initializeApp } from "firebase/app";
@@ -24,6 +25,7 @@ const db = getFirestore(app);
 const auth = getAuth();
 
 const SignUp = (props) => {
+  const navigate = useNavigate()
   const { setUser } = props;
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
@@ -45,7 +47,8 @@ const SignUp = (props) => {
       console.error("Error adding document: ", e);
     }
   };
-  const handleClick = () => {
+  const handleClick = async() => {
+  try{
     setLoading(true);
     if (!emailValidator(email)) {
       setLoading(false);
@@ -64,8 +67,7 @@ const SignUp = (props) => {
       setErrState("Password and confirm password should be the same");
       return;
     }
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+    await createUserWithEmailAndPassword(auth, email, password)
         setLoading(false);
         updateProfile(auth.currentUser, {
           displayName: username.toLowerCase(),
@@ -80,8 +82,8 @@ const SignUp = (props) => {
           .catch((e) => {
             console.log(e);
           });
-      })
-      .catch((err) => {
+      }
+      catch(err) {
         switch (err.code) {
           case "auth/email-already-in-use":
             setErrState("Email already in use");
@@ -90,7 +92,10 @@ const SignUp = (props) => {
             setErrState(err.code);
         }
         setLoading(false);
-      });
+      }
+      finally{
+        navigate("/")
+      }
   };
   return (
     <>

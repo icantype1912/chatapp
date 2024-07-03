@@ -66,15 +66,15 @@ const Messages = (props) => {
     }
   };
 
-  const onLogOut = () => {
-    signOut(auth)
-      .then(() => {
-        setUser(null);
-        navigate("/login");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const onLogOut = async() => {
+    try{
+      await signOut(auth);
+      setUser(null);
+      navigate("/login")
+    }
+    catch(error){
+      console.error(error)
+    }
   };
 
   const handleSend = () => {

@@ -45,19 +45,19 @@ const Login = (props) => {
       setErr("Please enter your valid email address");
     }
   };
-  const handleClick = () => {
+  const handleClick = async () => {
+    try{
     setLoading(true);
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        setUser({
+    const userCredential = await signInWithEmailAndPassword(auth, email, password)
+      setUser({
           username: userCredential.user.displayName,
           email: userCredential.user.email,
           phone: userCredential.user.phone,
         });
         setLoading(false);
         navigate("/");
-      })
-      .catch((err) => {
+    }
+    catch(err) {
         switch (err.code) {
           case "auth/invalid-credential":
             setErr("Your Username and Password do not match");
@@ -69,7 +69,7 @@ const Login = (props) => {
             setErr(err.code);
         }
         setLoading(false);
-      });
+      };
   };
   return (
     <>
