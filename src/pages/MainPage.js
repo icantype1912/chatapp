@@ -9,9 +9,6 @@ const MainPage = (props) => {
   const { user, setUser } = props;
   const [receiver, setReceiver] = useState("groupchat");
   return (<div id="grandparent-container">
-    <div id="branding">
-      <h1>BlueMessages</h1>
-    </div>
     <div className="parent-container">
       <LeftConatainer
         user={user}

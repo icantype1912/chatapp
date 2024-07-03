@@ -35,6 +35,9 @@ const App = () => {
 
   return (
     <>
+    <div id="branding">
+      <h1>BlueMessages</h1>
+    </div>
       <BrowserRouter>
         {user === null ? (
           <Routes>

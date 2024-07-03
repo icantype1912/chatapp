@@ -12,7 +12,6 @@
 
 
 #branding{
-  background-color: #1F1F2B;
   height: 10vh;
   color:#6d84f6;
   display: flex;
@@ -293,7 +292,7 @@ body::-webkit-scrollbar {
 .login-table {
   width: 50ch;
   margin: auto;
-  margin-top: 9ch;
+  margin-top: 6ch;
   height: 45ch;
   align-items: center;
   border-radius: 1ch;
@@ -358,7 +357,7 @@ body::-webkit-scrollbar {
 .signup-table {
   width: 50ch;
   margin: auto;
-  margin-top: 7ch;
+  margin-top: 4ch;
   height: 50ch;
   align-items: center;
   border-radius: 1ch;
