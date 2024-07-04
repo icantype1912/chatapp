@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   collection,
   query,
@@ -10,9 +10,15 @@ import {
 import { initializeApp } from "firebase/app";
 
 import {
-  apiKey,authDomain,databaseURL,storageBucket,messagingSenderId,appId,measurementId,
-  projectId
-} from "../firebaseconfig.js"
+  apiKey,
+  authDomain,
+  databaseURL,
+  storageBucket,
+  messagingSenderId,
+  appId,
+  measurementId,
+  projectId,
+} from "../firebaseconfig.js";
 
 const firebaseConfig = {
   apiKey: apiKey,
@@ -29,16 +35,15 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 export const ContactList = (props) => {
-  const { user, receiver, setReceiver, setContactLoading, search } =
-    props;
+  const { user, receiver, setReceiver, setContactLoading, search } = props;
   const [count, setCount] = useState(6);
   const [contacts, setContacts] = useState([]);
-  const scroller = useRef()
+  const scroller = useRef();
   const handleScroll = () => {
     if (scroller.current) {
       const { scrollTop, scrollHeight, clientHeight } = scroller.current;
       if (scrollTop + clientHeight >= scrollHeight) {
-        setCount((prev) => prev+5);
+        setCount((prev) => prev + 5);
         scroller.current.scrollTop = scrollHeight - clientHeight - 1;
       }
     }
@@ -62,7 +67,6 @@ export const ContactList = (props) => {
     return () => unsub();
   }, [count, setContactLoading, search]);
   useEffect(() => {
-
     const div = scroller.current;
     if (div) {
       div.addEventListener("scroll", handleScroll);
@@ -78,9 +82,7 @@ export const ContactList = (props) => {
     <>
       <div className="contact-list" ref={scroller}>
         {contacts
-          .filter(x => 
-             x.Name !== user.username
-          )
+          .filter((x) => x.Name !== user.username)
           .map((x) => {
             return (
               <div
@@ -100,4 +102,3 @@ export const ContactList = (props) => {
     </>
   );
 };
-

@@ -5,12 +5,18 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, orderBy } from "firebase/firestore";
 import { addDoc, collection, query, onSnapshot } from "firebase/firestore";
 import { signOut, getAuth } from "firebase/auth";
-import {SendText} from "./SendText";
-import {MessagesHeader} from "./MessagesHeader";
+import { SendText } from "./SendText";
+import { MessagesHeader } from "./MessagesHeader";
 import {
-  apiKey,authDomain,databaseURL,storageBucket,messagingSenderId,appId,measurementId,
-  projectId
-} from "../firebaseconfig.js"
+  apiKey,
+  authDomain,
+  databaseURL,
+  storageBucket,
+  messagingSenderId,
+  appId,
+  measurementId,
+  projectId,
+} from "../firebaseconfig.js";
 
 const firebaseConfig = {
   apiKey: apiKey,
@@ -68,19 +74,18 @@ export const Messages = (props) => {
     }
   };
 
-  const onLogOut = async() => {
-    try{
+  const onLogOut = async () => {
+    try {
       await signOut(auth);
       setUser(null);
-      navigate("/login")
-    }
-    catch(error){
-      console.error(error)
+      navigate("/login");
+    } catch (error) {
+      console.error(error);
     }
   };
 
-  const handleSend = (msg,setMsg) => {
-    if (typeof msg !== 'string') {
+  const handleSend = (msg, setMsg) => {
+    if (typeof msg !== "string") {
       return;
     }
     const cleanedMessage = msg.trim();
@@ -99,11 +104,7 @@ export const Messages = (props) => {
   return (
     <>
       <div className="right-container">
-        <MessagesHeader
-          receiver={receiver}
-          user={user}
-          onLogOut={onLogOut}
-        />
+        <MessagesHeader receiver={receiver} user={user} onLogOut={onLogOut} />
 
         <div className="middle" ref={ref}>
           {allMessages.map((x) => {
@@ -122,12 +123,8 @@ export const Messages = (props) => {
           })}
         </div>
 
-        <SendText
-          handleSubmit={handleSubmit}
-          handleSend={handleSend}
-        />
+        <SendText handleSubmit={handleSubmit} handleSend={handleSend} />
       </div>
     </>
   );
 };
-

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {ContactList} from "./ContactList";
+import { ContactList } from "./ContactList";
 
 export const Contacts = (props) => {
   const { user, receiver, setReceiver } = props;
@@ -29,4 +29,3 @@ export const Contacts = (props) => {
     </>
   );
 };
-

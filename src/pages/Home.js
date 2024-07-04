@@ -1,6 +1,6 @@
 import React from "react";
-import {Contacts} from "../components/Contacts";
-import {Messages} from "../components/Messages";
+import { Contacts } from "../components/Contacts";
+import { Messages } from "../components/Messages";
 import { useState } from "react";
 
 const Home = (props) => {
@@ -9,11 +9,7 @@ const Home = (props) => {
   return (
     <div id="grandparent-container">
       <div className="parent-container">
-        <Contacts
-          user={user}
-          receiver={receiver}
-          setReceiver={setReceiver}
-        />
+        <Contacts user={user} receiver={receiver} setReceiver={setReceiver} />
         <Messages user={user} setUser={setUser} receiver={receiver} />
       </div>
     </div>

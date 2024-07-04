@@ -6,9 +6,15 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { validateEmail } from "../validator";
 import {
-  apiKey,authDomain,databaseURL,storageBucket,messagingSenderId,appId,measurementId,
-  projectId
-} from "../firebaseconfig.js"
+  apiKey,
+  authDomain,
+  databaseURL,
+  storageBucket,
+  messagingSenderId,
+  appId,
+  measurementId,
+  projectId,
+} from "../firebaseconfig.js";
 
 const firebaseConfig = {
   apiKey: apiKey,
@@ -39,7 +45,7 @@ const Login = (props) => {
   const handleEmailChange = (e) => {
     const val = e.target.value;
     setEmail(val);
-    if ( validateEmail(val)) {
+    if (validateEmail(val)) {
       setDisable(false);
       if (err === "Please enter your valid email address") {
         setErr("");
@@ -50,18 +56,21 @@ const Login = (props) => {
     }
   };
   const handleClick = async () => {
-    try{
-    setLoading(true);
-    const userCredential = await signInWithEmailAndPassword(auth, email, password)
+    try {
+      setLoading(true);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       setUser({
-          username: userCredential.user.displayName,
-          email: userCredential.user.email,
-          phone: userCredential.user.phone,
-        });
-        navigate("/");
-    }
-    catch(err) {
-      if(err.code){
+        username: userCredential.user.displayName,
+        email: userCredential.user.email,
+        phone: userCredential.user.phone,
+      });
+      navigate("/");
+    } catch (err) {
+      if (err.code) {
         switch (err.code) {
           case "auth/invalid-credential":
             setErr("Your Username and Password do not match");
@@ -73,10 +82,9 @@ const Login = (props) => {
             setErr(err.code);
         }
       }
-      }
-      finally{
-        setLoading(false);
-      }
+    } finally {
+      setLoading(false);
+    }
   };
   return (
     <>

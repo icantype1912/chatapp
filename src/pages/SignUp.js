@@ -6,11 +6,17 @@ import { updateProfile } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { Link } from "react-router-dom";
 import { getFirestore, addDoc, collection } from "firebase/firestore";
-import {validateEmail,validatePassword} from "../validator.js"
+import { validateEmail, validatePassword } from "../validator.js";
 import {
-  apiKey,authDomain,databaseURL,storageBucket,messagingSenderId,appId,measurementId,
-  projectId
-} from "../firebaseconfig.js"
+  apiKey,
+  authDomain,
+  databaseURL,
+  storageBucket,
+  messagingSenderId,
+  appId,
+  measurementId,
+  projectId,
+} from "../firebaseconfig.js";
 
 const firebaseConfig = {
   apiKey: apiKey,
@@ -29,7 +35,7 @@ const db = getFirestore(app);
 const auth = getAuth();
 
 const SignUp = (props) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { setUser } = props;
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
@@ -54,13 +60,13 @@ const SignUp = (props) => {
   const handleClick = async () => {
     try {
       setLoading(true);
-  
+
       if (!validateEmail(email)) {
         setLoading(false);
         setErrState("Invalid email");
         return;
       }
-  
+
       if (!validatePassword(password)) {
         setLoading(false);
         setErrState(
@@ -68,26 +74,26 @@ const SignUp = (props) => {
         );
         return;
       }
-  
+
       if (password !== confirm) {
         setLoading(false);
         setErrState("Password and confirm password should be the same");
         return;
       }
-  
+
       await createUserWithEmailAndPassword(auth, email, password);
-      
+
       await updateProfile(auth.currentUser, {
         displayName: username.toLowerCase(),
       });
-  
+
       setUser({
         username: auth.currentUser.displayName,
         email: auth.currentUser.email,
       });
-  
+
       await addUser();
-  
+
       navigate("/");
     } catch (err) {
       switch (err.code) {
@@ -101,7 +107,7 @@ const SignUp = (props) => {
       setLoading(false);
     }
   };
-  
+
   return (
     <>
       <form onSubmit={handleSubmit} className="signup-table">
