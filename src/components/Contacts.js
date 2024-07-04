@@ -1,14 +1,13 @@
-import React, { useState, useRef } from "react";
-import ContactList from "./ContactList";
+import React, { useState } from "react";
+import {ContactList} from "./ContactList";
 
-const Contacts = (props) => {
-  const scroller = useRef();
+export const Contacts = (props) => {
   const { user, receiver, setReceiver } = props;
   const [search, setSearch] = useState("");
   const [contactLoading, setContactLoading] = useState(false);
   return (
     <>
-      <div className="left-container" ref={scroller}>
+      <div className="left-container">
         <input
           type="text"
           className="search"
@@ -22,7 +21,6 @@ const Contacts = (props) => {
           user={user}
           receiver={receiver}
           setReceiver={setReceiver}
-          scroller={scroller}
           setContactLoading={setContactLoading}
           search={search}
         />
@@ -32,4 +30,3 @@ const Contacts = (props) => {
   );
 };
 
-export default Contacts;

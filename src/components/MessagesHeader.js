@@ -1,8 +1,10 @@
 import React from "react";
+import { useState } from "react";
 import { Popover } from "@mui/material";
 
-const MessagesHeader = (props) => {
-  const { receiver, user, popen, setPopen, onLogOut } = props;
+export const MessagesHeader = (props) => {
+  const { receiver, user, onLogOut } = props;
+  const [popen, setPopen] = useState(false);
   return (
     <div className="top">
       <h2>{receiver}</h2>
@@ -51,5 +53,3 @@ const MessagesHeader = (props) => {
     </div>
   );
 };
-
-export default MessagesHeader;

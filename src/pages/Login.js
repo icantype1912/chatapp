@@ -4,17 +4,21 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { emailValidator } from "../validator";
+import { validateEmail } from "../validator";
+import {
+  apiKey,authDomain,databaseURL,storageBucket,messagingSenderId,appId,measurementId,
+  projectId
+} from "../firebaseconfig.js"
 
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_FIREBASE_APP_ID,
-  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
+  apiKey: apiKey,
+  authDomain: authDomain,
+  databaseURL: databaseURL,
+  projectId: projectId,
+  storageBucket: storageBucket,
+  messagingSenderId: messagingSenderId,
+  appId: appId,
+  measurementId: measurementId,
 };
 
 initializeApp(firebaseConfig);
@@ -35,7 +39,7 @@ const Login = (props) => {
   const handleEmailChange = (e) => {
     const val = e.target.value;
     setEmail(val);
-    if (!emailValidator(email)) {
+    if ( validateEmail(val)) {
       setDisable(false);
       if (err === "Please enter your valid email address") {
         setErr("");
@@ -54,10 +58,10 @@ const Login = (props) => {
           email: userCredential.user.email,
           phone: userCredential.user.phone,
         });
-        setLoading(false);
         navigate("/");
     }
     catch(err) {
+      if(err.code){
         switch (err.code) {
           case "auth/invalid-credential":
             setErr("Your Username and Password do not match");
@@ -68,8 +72,11 @@ const Login = (props) => {
           default:
             setErr(err.code);
         }
+      }
+      }
+      finally{
         setLoading(false);
-      };
+      }
   };
   return (
     <>

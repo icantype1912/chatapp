@@ -1,12 +1,12 @@
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const passwordRegex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
-const emailValidator = (x)=>{
+const validateEmail = (x)=>{
     return x.match(emailRegex);
 }
 
-const passwordValidator = (x)=>{
+const validatePassword = (x)=>{
     return x.match(passwordRegex)
 }
 
-export {emailValidator,passwordValidator}
+export {validateEmail,validatePassword}

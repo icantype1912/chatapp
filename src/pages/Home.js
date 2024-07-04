@@ -1,6 +1,6 @@
 import React from "react";
-import Contacts from "../components/Contacts";
-import Messages from "../components/Messages";
+import {Contacts} from "../components/Contacts";
+import {Messages} from "../components/Messages";
 import { useState } from "react";
 
 const Home = (props) => {

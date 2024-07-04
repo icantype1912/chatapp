@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import SendIcon from "@mui/icons-material/Send";
 
-const SendText = (props) => {
-  const { handleSubmit, message, setMessage, handleSend } = props;
+export const SendText = (props) => {
+  const { handleSubmit, handleSend } = props;
+  const [message,setMessage] = useState("")
   return (
     <div className="bottom">
       <form className="sendMes" onSubmit={handleSubmit}>
@@ -14,7 +15,7 @@ const SendText = (props) => {
             setMessage(e.target.value);
           }}
         ></input>
-        <button onClick={handleSend}>
+        <button onClick={()=>{handleSend(message,setMessage)}}>
           <SendIcon fontSize="md" sx={{ transform: "rotate(-40deg)" }} />
         </button>
       </form>
@@ -22,4 +23,3 @@ const SendText = (props) => {
   );
 };
 
-export default SendText;

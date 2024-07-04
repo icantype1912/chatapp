@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import {
   collection,
   query,
@@ -9,25 +9,40 @@ import {
 } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 
+import {
+  apiKey,authDomain,databaseURL,storageBucket,messagingSenderId,appId,measurementId,
+  projectId
+} from "../firebaseconfig.js"
+
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_FIREBASE_APP_ID,
-  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
+  apiKey: apiKey,
+  authDomain: authDomain,
+  databaseURL: databaseURL,
+  projectId: projectId,
+  storageBucket: storageBucket,
+  messagingSenderId: messagingSenderId,
+  appId: appId,
+  measurementId: measurementId,
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const ContactList = (props) => {
-  const { user, receiver, setReceiver, scroller, setContactLoading, search } =
+export const ContactList = (props) => {
+  const { user, receiver, setReceiver, setContactLoading, search } =
     props;
   const [count, setCount] = useState(6);
   const [contacts, setContacts] = useState([]);
+  const scroller = useRef()
+  const handleScroll = () => {
+    if (scroller.current) {
+      const { scrollTop, scrollHeight, clientHeight } = scroller.current;
+      if (scrollTop + clientHeight >= scrollHeight) {
+        setCount((prev) => prev+5);
+        scroller.current.scrollTop = scrollHeight - clientHeight - 1;
+      }
+    }
+  };
   useEffect(() => {
     setContactLoading(true);
     const q = query(
@@ -47,17 +62,6 @@ const ContactList = (props) => {
     return () => unsub();
   }, [count, setContactLoading, search]);
   useEffect(() => {
-    const handleScroll = () => {
-      if (scroller.current) {
-        const { scrollTop, scrollHeight, clientHeight } = scroller.current;
-        if (scrollTop + clientHeight >= scrollHeight) {
-          setCount((prev) => {
-            return prev + 5;
-          });
-          scroller.current.scrollTop = scrollHeight - clientHeight - 1;
-        }
-      }
-    };
 
     const div = scroller.current;
     if (div) {
@@ -72,11 +76,11 @@ const ContactList = (props) => {
   }, [scroller]);
   return (
     <>
-      <div className="contact-list">
+      <div className="contact-list" ref={scroller}>
         {contacts
-          .filter((x) => {
-            return x.Name !== user.username;
-          })
+          .filter(x => 
+             x.Name !== user.username
+          )
           .map((x) => {
             return (
               <div
@@ -97,4 +101,3 @@ const ContactList = (props) => {
   );
 };
 
-export default ContactList;

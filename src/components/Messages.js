@@ -5,36 +5,38 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, orderBy } from "firebase/firestore";
 import { addDoc, collection, query, onSnapshot } from "firebase/firestore";
 import { signOut, getAuth } from "firebase/auth";
-import SendText from "./SendText";
-import MessagesHeader from "./MessagesHeader";
+import {SendText} from "./SendText";
+import {MessagesHeader} from "./MessagesHeader";
+import {
+  apiKey,authDomain,databaseURL,storageBucket,messagingSenderId,appId,measurementId,
+  projectId
+} from "../firebaseconfig.js"
 
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_FIREBASE_APP_ID,
-  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
+  apiKey: apiKey,
+  authDomain: authDomain,
+  databaseURL: databaseURL,
+  projectId: projectId,
+  storageBucket: storageBucket,
+  messagingSenderId: messagingSenderId,
+  appId: appId,
+  measurementId: measurementId,
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth();
 
-const Messages = (props) => {
+export const Messages = (props) => {
   const navigate = useNavigate();
   const { user, setUser, receiver } = props;
   const ref = useRef();
   const time = new Date();
-  const [popen, setPopen] = useState(false);
-  const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([]);
+  const [allMessages, setAllMessages] = useState([]);
 
   useEffect(() => {
     ref.current.scrollTop = ref.current.scrollHeight;
-  }, [messages]);
+  }, [allMessages]);
   useEffect(() => {
     const q = query(collection(db, "Chat"), orderBy("time"));
     const unsub = onSnapshot(q, (snapshot) => {
@@ -48,7 +50,7 @@ const Messages = (props) => {
           (user.username === x.receiver && receiver === x.user) ||
           (receiver === "groupchat" && x.receiver === "groupchat")
       );
-      setMessages(newTasks);
+      setAllMessages(newTasks);
     });
     return () => unsub();
   }, [receiver, user.username]);
@@ -77,13 +79,16 @@ const Messages = (props) => {
     }
   };
 
-  const handleSend = () => {
-    const cleanedMessage = message.trim();
+  const handleSend = (msg,setMsg) => {
+    if (typeof msg !== 'string') {
+      return;
+    }
+    const cleanedMessage = msg.trim();
     if (cleanedMessage === "") {
       return;
     }
     addUserToFirestore(cleanedMessage);
-    setMessage("");
+    setMsg("");
   };
 
   const handleSubmit = (e) => {
@@ -97,13 +102,11 @@ const Messages = (props) => {
         <MessagesHeader
           receiver={receiver}
           user={user}
-          popen={popen}
-          setPopen={setPopen}
           onLogOut={onLogOut}
         />
 
         <div className="middle" ref={ref}>
-          {messages.map((x) => {
+          {allMessages.map((x) => {
             return (
               <>
                 <div
@@ -121,8 +124,6 @@ const Messages = (props) => {
 
         <SendText
           handleSubmit={handleSubmit}
-          message={message}
-          setMessage={setMessage}
           handleSend={handleSend}
         />
       </div>
@@ -130,4 +131,3 @@ const Messages = (props) => {
   );
 };
 
-export default Messages;
