@@ -54,6 +54,7 @@ export const ContactList = (props) => {
       collection(db, "Users"),
       where("Name", ">=", search.toLowerCase()),
       where("Name", "<=", search.toLowerCase() + "\uf8ff"),
+      where("isActive","==",true),
       limit(count)
     );
     const unsub = onSnapshot(q, (snapshot) => {

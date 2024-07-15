@@ -9,6 +9,86 @@
   flex-direction: column;
 }
 
+#profile-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  width: 80ch;
+  margin: auto;
+  margin-top: 3ch;
+  padding: 3ch;
+  height: 40ch;
+  border-radius: 1ch;
+  background-color: aliceblue;
+}
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 600px;
+  width: 100%;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 2ch;
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group p {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin: 0 ;
+}
+
+.form-group p {
+  border: none;
+  background-color: #fff;
+}
+
+.btn {
+  align-self: center;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1ch;
+}
+
+.btn-primary {
+  background-color: #6d84f6;
+}
+
+.btn-primary:hover {
+  background-color: #4a60d2;
+}
+
+
+
 #branding {
   height: 7vh;
   color: #6d84f6;

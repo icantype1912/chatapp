@@ -51,7 +51,10 @@ const SignUp = (props) => {
     try {
       await addDoc(collection(db, "Users"), {
         Name: username.toLowerCase(),
-        message: "does not matter",
+        email:email.toLowerCase(),
+        Phone:"Unspecified",
+        DOB:"Unspecified",
+        isActive:true
       });
     } catch (e) {
       console.error("Error adding document: ", e);
